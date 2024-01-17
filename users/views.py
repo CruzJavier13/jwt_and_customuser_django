@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import GenericAPIView
 from .serializers import user_register_serializer
 from rest_framework.response import Response
@@ -7,6 +8,7 @@ from .utils import send_code_to_user
 
 # Create your views here.
 class RegisterUserView(GenericAPIView):
+    permission_classes=[IsAuthenticated]
     serializer_class= user_register_serializer
     
     def post(self, request):
