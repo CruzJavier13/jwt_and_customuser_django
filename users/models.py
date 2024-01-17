@@ -11,6 +11,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser=models.BooleanField(default=False)
     is_verified=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     date_joined=models.DateTimeField(auto_now_add=True)
     last_login=models.DateTimeField(auto_now=True)
 
@@ -29,3 +30,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def tokens(self):
         pass
+
+class OneTimePassword(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    code=models.CharField(max_length=6, unique=True)
+
+    def __str__(self):
+        return f"{self.user.first_name}-passcode"
